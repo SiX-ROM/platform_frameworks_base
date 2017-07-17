@@ -6065,6 +6065,11 @@ public final class Settings {
         public static final String PULSE_CUSTOM_BUTTONS_OPACITY = "pulse_custom_buttons_opacity";
 
         /**
+         * Scaling value for smartbar custom button icon
+         */
+        public static final String SMARTBAR_CUSTOM_ICON_SIZE = "smartbar_custom_icon_size";
+
+        /**
          * A flag containing settings used for biometric weak
          * @hide
          */
