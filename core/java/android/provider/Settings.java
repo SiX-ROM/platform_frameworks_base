@@ -4477,7 +4477,7 @@ public final class Settings {
         public static final String STATUSBAR_BATTERY_BAR_ANIMATE = "statusbar_battery_bar_animate";
 
         /**
-         * Whether to center or left justify date time group
+         * Allows Hidden (0) Left Justify (1) or Center Time/Date (2) in Pulldown Header
          * @hide
          */
         public static final String QS_DATE_TIME_CENTER = "qs_date_time_center";
@@ -4491,6 +4491,7 @@ public final class Settings {
 
         /**
          * Statusbar SiX logo
+         *
          * @hide
          */
         public static final String STATUS_BAR_SIX_LOGO = "status_bar_six_logo";

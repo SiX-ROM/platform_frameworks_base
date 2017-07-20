@@ -132,7 +132,7 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
     private Drawable mCurrentBackground;
     private int mQsPanelOffsetNormal;
     private int mQsPanelOffsetHeader;
-    private boolean mDateTimeGroupCenter;
+    private int mDateTimeGroupCenter;
 
     public QuickStatusBarHeader(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -269,13 +269,28 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
     }
 
     private void updateDateTimeCenter() {
-        mDateTimeGroupCenter = isDateTimeGroupCenter();
-        if (mDateTimeGroupCenter && !(hasSettingsIcon && hasEdit && hasMultiUserSwitch && hasExpandIndicator)) {
-            mDateTimeAlarmGroup.setVisibility(View.GONE);
-            mDateTimeAlarmCenterGroup.setVisibility(View.VISIBLE);
-        } else {
-            mDateTimeAlarmCenterGroup.setVisibility(View.GONE);
-            mDateTimeAlarmGroup.setVisibility(View.VISIBLE);
+
+        mDateTimeGroupCenter = Settings.System.getInt(mContext.getContentResolver(),
+                 Settings.System.QS_DATE_TIME_CENTER, 1);
+        switch (mDateTimeGroupCenter) {
+            case 0:
+                mDateTimeAlarmCenterGroup.setVisibility(View.GONE);
+                mDateTimeAlarmGroup.setVisibility(View.GONE);
+                break;
+            case 1:
+                mDateTimeAlarmCenterGroup.setVisibility(View.GONE);
+                mDateTimeAlarmGroup.setVisibility(View.VISIBLE);
+                break;
+            case 2:
+                if (!(hasSettingsIcon && hasEdit && hasMultiUserSwitch
+                                      && hasExpandIndicator && hasRunningServices)) {
+                mDateTimeAlarmGroup.setVisibility(View.GONE);
+                mDateTimeAlarmCenterGroup.setVisibility(View.VISIBLE);
+                } else {
+                mDateTimeAlarmCenterGroup.setVisibility(View.GONE);
+                mDateTimeAlarmGroup.setVisibility(View.VISIBLE);
+                }
+                break;
         }
     }
 
@@ -701,10 +716,5 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
         p.height = getExpandedHeight();
         mBackgroundImage.setLayoutParams(p);
 
-    }
-
-    public boolean isDateTimeGroupCenter() {
-        return Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.QS_DATE_TIME_CENTER, 1) == 1;
     }
 }
